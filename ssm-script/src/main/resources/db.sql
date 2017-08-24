@@ -224,7 +224,7 @@ CREATE TABLE `t_sys_user` (
 
 /*Data for the table `t_sys_user` */
 
-insert  into `t_sys_user`(`id`,`loginId`,`name`,`password`,`email`,`disabled`,`creator`,`createTime`,`updateBy`,`updateTime`,`isFirstLogin`) values ('581476892ea3c04dfdc8bfabf52d2a74','admin','胡新胜','ed544c6774f27a0daae31577d518696bacf501a6','wxxx@qq.com','\0','admin','2017-06-29 09:03:16','admin','2017-07-21 15:23:06','\0');
+insert  into `t_sys_user`(`id`,`loginId`,`name`,`password`,`email`,`disabled`,`creator`,`createTime`,`updateBy`,`updateTime`,`isFirstLogin`) values ('581476892ea3c04dfdc8bfabf52d2a74','admin','胡新胜','91bfefcd500418a51864e1f92a8c1ab903ae5977','wxxx@qq.com','\0','admin','2017-06-29 09:03:16','admin','2017-07-21 15:23:06','\0');
 
 /*Table structure for table `t_sys_user_login` */
 
