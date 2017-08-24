@@ -15,3 +15,5 @@
     clean package -DMaven.test.skip=true -P=pro
 
   2、eclipse打包，请自行了解
+
+5、登录用户名密码：admin/abcd123456
