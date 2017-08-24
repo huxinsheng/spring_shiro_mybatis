@@ -11,3 +11,6 @@ gen
 /ssm-core/target/
 /ssm-script/target/
 /ssm-web/target/
+/ssm-web/src/main/resources/rebel.xml
+/ssm-core/src/main/resources/rebel.xml
+/ssm-commons/src/main/resources/rebel.xml
