@@ -1,0 +1,56 @@
+<div id="sidebar" class="sidebar responsive ace-save-state">
+    <script type="text/javascript">
+        try{ace.settings.loadState('sidebar')}catch(e){}
+    </script>
+
+    <!--<div class="sidebar-shortcuts" id="sidebar-shortcuts">
+        <div class="sidebar-shortcuts-large" id="sidebar-shortcuts-large">
+            <button class="btn btn-success">
+                <i class="ace-icon fa fa-signal"></i>
+            </button>
+
+            <button class="btn btn-info #if (!$shiro.hasRole("analysis"))btn-modify-password #end" title="密码修改">
+                <i class="ace-icon fa fa-pencil"></i>
+            </button>
+            &lt;!&ndash; #section:basics/sidebar.layout.shortcuts &ndash;&gt;
+            #if ($shiro.hasRole("admin"))
+            <button class="btn btn-warning" onclick="javascript:location.href='$ctx/core/role';" title="角色管理">
+                <i class="ace-icon fa fa-users"></i>
+            </button>
+
+            <button class="btn btn-danger" onclick="javascript:location.href='$ctx/core/menu';" title="菜单管理">
+                <i class="ace-icon fa fa-cogs"></i>
+            </button>
+            #else
+            <button class="btn btn-warning" title="角色管理">
+                <i class="ace-icon fa fa-users"></i>
+            </button>
+
+            <button class="btn btn-danger" title="菜单管理">
+                <i class="ace-icon fa fa-cogs"></i>
+            </button>
+            #end
+            &lt;!&ndash; /section:basics/sidebar.layout.shortcuts &ndash;&gt;
+        </div>
+
+        <div class="sidebar-shortcuts-mini" id="sidebar-shortcuts-mini">
+            <span class="btn btn-success"></span>
+
+            <span class="btn btn-info"></span>
+
+            <span class="btn btn-warning"></span>
+
+            <span class="btn btn-danger"></span>
+        </div>
+    </div>--><!-- /.sidebar-shortcuts -->
+
+    <ul class="nav nav-list">
+    </ul><!-- /.nav-list -->
+
+    <!-- #section:basics/sidebar.layout.minimize -->
+    <div class="sidebar-toggle sidebar-collapse" id="sidebar-collapse">
+        <i id="sidebar-toggle-icon" class="ace-icon fa fa-angle-double-left ace-save-state" data-icon1="ace-icon fa fa-angle-double-left" data-icon2="ace-icon fa fa-angle-double-right"></i>
+    </div>
+
+    <!-- /section:basics/sidebar.layout.minimize -->
+</div>

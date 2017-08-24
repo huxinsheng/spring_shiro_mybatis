@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxs.ssm.dao.core.UserRoleDAO">
+    <resultMap id="roleResultMap" type="com.hxs.ssm.model.core.Role">
+        <result column="id" property="id"/>
+        <result column="sign" property="sign"/>
+    </resultMap>
+    <insert id="insertAll">
+        INSERT INTO t_sys_user_role(userId, roleId, creator, createTime)VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.userId},#{item.roleId},#{item.creator},#{item.createTime})
+        </foreach>
+    </insert>
+
+    <delete id="deleteByUserIdAndRoleId">
+        delete from t_sys_user_role
+        where 1=1
+        <if test="userId!=null and userId!=''">
+            and userId = #{userId}
+        </if>
+        <if test="roleId!=null and roleId!=''">
+            and roleId = #{roleId}
+        </if>
+    </delete>
+    <select id="findByEntity" resultType="com.hxs.ssm.model.core.Role">
+        SELECT
+          a.id,
+          a.name,
+          CASE
+            WHEN a.id IN
+            (SELECT
+              c.roleId
+            FROM
+              t_sys_user_role c
+            WHERE c.userId = #{userId})
+            THEN TRUE
+            ELSE FALSE
+          END checked
+        FROM
+          t_sys_role a
+    </select>
+    <select id="findByUserId" resultMap="roleResultMap">
+        SELECT
+          a.`id`,
+          a.`sign`
+        FROM
+          t_sys_role a,
+          t_sys_user_role b
+        WHERE a.`id` = b.`roleId`
+          AND b.`userId` = #{value}
+    </select>
+</mapper>

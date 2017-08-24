@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+<mapper namespace="com.hxs.ssm.dao.core.UserDAO">
+    <!-- 结果映射 -->
+    <resultMap id="default" type="com.hxs.ssm.model.core.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="loginId" column="loginId"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="disabled" column="disabled"/>
+        <result property="creator" column="creator"/>
+        <result property="createTime" column="createTime"/>
+        <result property="updateBy" column="updateBy"/>
+        <result property="updateTime" column="updateTime"/>
+        <result property="isFirstLogin" column="isFirstLogin"/>
+        <association property="loginInfo" column="{id=id}" select="getLoginInfoByLoginId"/>
+        <collection property="roles" column="id" select="com.hxs.ssm.dao.core.UserRoleDAO.findByUserId"/>
+    </resultMap>
+    <resultMap id="loginDefault" type="com.hxs.ssm.model.core.User">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="loginId" column="loginId"/>
+        <result property="password" column="password"/>
+        <result property="email" column="email"/>
+        <result property="disabled" column="disabled"/>
+        <result property="isFirstLogin" column="isFirstLogin"/>
+        <association property="loginInfo" column="{id=id}" select="getLoginInfoByLoginId"/>
+    </resultMap>
+    <resultMap id="loginInfoResult" type="com.hxs.ssm.UserInfo">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="loginId" column="loginId"/>
+        <result property="ip" column="ip"/>
+        <result property="loginTime" column="loginTime"/>
+    </resultMap>
+    <!-- 动态条件 -->
+    <sql id="where">
+        <if test="id!=null and id!=''">
+            and id = #{id}
+        </if>
+        <if test="loginId!=null and loginId!=''">
+            and loginId = #{loginId}
+        </if>
+        <if test="name!=null and name!=''">
+            and name = #{name}
+        </if>
+        <if test="password!=null and password!=''">
+            and password = #{password}
+        </if>
+    </sql>
+    <sql id="order">
+        <if test="sidx!=null and sidx!=''">
+            order by ${sidx} ${sord}
+        </if>
+    </sql>
+    <select id="getLoginInfoByLoginId" resultMap="loginInfoResult">
+        SELECT
+          a.id,
+          a.`loginId`,
+          a.`name`,
+          a.`ip`,
+          MAX(loginTime) loginTime
+        FROM
+          t_sys_user_login a
+        WHERE a.id = #{id}
+    </select>
+    <!-- 根据登录名检索 -->
+    <select id="findByLoginId" resultMap="default">
+		select * from t_sys_user where loginId = #{loginId}
+	</select>
+    <select id="getIdByLoginId" resultType="String">
+		select FId from t_sys_user where loginId = #{loginId}
+	</select>
+    <!--  -->
+    <!--<update id="updateMisLock">
+		update t_sys_user set FLockTime = #{lockTime},FMisTimes = #{FMisTimes},
+		 where id = #{id}
+	</update>-->
+    <!-- 根据Id查询 -->
+    <select id="getById" resultMap="default">
+		select * from t_sys_user where id = #{id}
+	</select>
+    <select id="getAdminUserId" resultType="String">
+		select id from t_sys_user where isAdmin=1
+	</select>
+    <!-- 插入数据 -->
+    <insert id="insert">
+		insert into t_sys_user(id,loginId,name,password,email,disabled,creator,createTime,updateBy,updateTime,isFirstLogin)
+		values(#{id},#{loginId},#{name},#{password},#{email},#{disabled},#{creator},#{createTime},#{updateBy},#{updateTime},#{isFirstLogin})
+	</insert>
+    <insert id="insertLoginInfo">
+        insert into t_sys_user_login(id,loginId,name,ip,loginTime)
+		values(#{id},#{loginId},#{name},#{ip},now())
+    </insert>
+    <!-- 更新数据 -->
+    <update id="update">
+        UPDATE t_sys_user
+        <set>
+            <if test="id != null">`id` = #{id},</if>
+            <if test="name != null">`name` = #{name},</if>
+            <if test="email != null">`email` = #{email},</if>
+            <if test="disabled != null">`disabled` = #{disabled},</if>
+            <if test="password != null">`password` = #{password},</if>
+            <if test="createTime != null">`createTime` = #{createTime},</if>
+            <if test="updateTime != null">`updateTime` = #{updateTime},</if>
+            <if test="creator != null">`creator` = #{creator},</if>
+            <if test="updateBy != null">`updateBy` = #{updateBy},</if>
+            <if test="isFirstLogin != null">`isFirstLogin` = #{isFirstLogin}</if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+    <update id="resetPassword">
+        UPDATE t_sys_user
+        <set>
+        <if test="password != null">`password` = #{password},</if>
+        <if test="updateTime != null">`updateTime` = #{updateTime},</if>
+        <if test="updateBy != null">`updateBy` = #{updateBy},</if>
+        <if test="isFirstLogin != null">`isFirstLogin` = #{isFirstLogin}</if>
+        </set>
+        where `id` = #{id}
+    </update>
+    <update id="updateLoginIdAndName">
+		update t_sys_user
+		set loginId=#{loginId},name=#{name}
+		where id = #{id}
+	</update>
+    <update id="updatePassword">
+		update t_sys_user set password=#{password}
+		where id = #{id}
+	</update>
+    <!-- 删除数据 -->
+    <delete id="deleteById">
+		delete from t_sys_user where id = #{id}
+	</delete>
+    <!-- 动态条件统计 -->
+    <select id="count" resultType="long">
+        select count(1) from t_sys_user
+        where 1=1
+        <include refid="where"/>
+    </select>
+    <!-- 动态条件查询，支持分页  -->
+    <select id="query" resultMap="default">
+        select * from t_sys_user
+        where 1=1
+        <include refid="where"/>
+        <include refid="order"/>
+        <if test="isPagination">
+            limit #{iDisplayStart}, #{iDisplayLength}
+        </if>
+    </select>
+    <select id="authentication" resultMap="loginDefault">
+        select * from t_sys_user where loginId = #{loginId} and password = #{password}
+    </select>
+
+</mapper>

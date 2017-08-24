@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <description>apache shiro配置</description>
+    <!-- 启用shrio授权注解拦截方式 -->
+    <aop:config proxy-target-class="true"></aop:config>
+
+    <context:component-scan base-package="com.hxs.ssm"/>
+
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+        <property name="securityManager" ref="securityManager"/>
+        <property name="loginUrl" value="/login"/>
+        <property name="successUrl" value="/"/>
+        <property name="unauthorizedUrl" value="/login"/>
+        <property name="filterChainDefinitions">
+            <value>
+                <!-- 静态资源允许访问 -->
+                /resources/** = anon
+                /json = anon
+                <!-- 登录页允许访问 -->
+                /core/user/login = anon
+                /core/user/resetPassword = anon
+                /resetPassword = anon
+                /core/res/**/ = anon
+                <!-- 其他资源需要认证 -->
+                <!-- /** = authc 所有url都必须认证通过才可以访问 -->
+                /** = authc
+            </value>
+        </property>
+    </bean>
+    <!-- 缓存管理器 使用Ehcache实现 -->
+    <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+        <property name="cacheManagerConfigFile" value="classpath:ehcache-shiro.xml"/>
+    </bean>
+
+    <!-- 会话DAO -->
+    <bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.MemorySessionDAO"/>
+
+    <!-- 会话管理器 -->
+    <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+        <property name="sessionDAO" ref="sessionDAO"/>
+        <property name="sessionIdCookieEnabled" value="true"/>
+        <property name="sessionIdCookie" ref="sessionIdCookie"/>
+    </bean>
+
+    <!-- 安全管理器 -->
+    <bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+        <property name="realms">
+            <list>
+                <ref bean="securityRealm"/>
+            </list>
+        </property>
+        <!-- cacheManager,集合spring缓存工厂 -->
+        <property name="cacheManager" ref="shiroEhcacheManager"/>
+        <property name="sessionManager" ref="sessionManager" />
+    </bean>
+    <!-- Shiro生命周期处理器 -->
+    <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor"/>
+
+    <bean id="sessionIdCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+        <constructor-arg name="name" value="gcsystem.session.id"/>
+    </bean>
+
+</beans>

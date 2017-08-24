@@ -1,0 +1,77 @@
+#parse("header-top.html")
+#parse("header-bottom.html")
+<style>
+</style>
+<!-- /section:basics/navbar.layout -->
+<div class="main-container ace-save-state" id="main-container">
+    <script type="text/javascript">
+        try {
+            ace.settings.loadState('main-container')
+        } catch (e) {
+        }
+    </script>
+
+    <!-- #section:basics/sidebar -->
+    #parse("sidebar.html")
+
+    <!-- /section:basics/sidebar -->
+    <div class="main-content">
+        <div class="main-content-inner">
+            <!-- #section:basics/content.breadcrumbs -->
+            #parse("breadcrumbs.html")
+            <!-- /section:basics/content.breadcrumbs -->
+            <div class="page-content">
+                <!-- #section:settings.box -->
+                #parse("settings.html")<!-- /.ace-settings-container -->
+                #parse("page-header.html")
+                <div class="row">
+                    <div class="col-xs-12 body-content">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <div class="error-container">
+                            <div class="well">
+                                <h1 class="text-danger lighter smaller">
+											<span class="danger bigger-125">
+												<i class="ace-icon fa fa-warning"></i>
+											</span>
+                                    您没有访问该页面的权限
+                                </h1>
+
+                                <hr />
+                                <h3 class="lighter smaller">请联系系统管理员给您分配所需的权限!</h3>
+
+                                <hr />
+                                <div class="space"></div>
+
+                                <div class="center">
+                                    <a href="javascript:history.back()" class="btn btn-grey">
+                                        <i class="ace-icon fa fa-arrow-left"></i>
+                                        返回
+                                    </a>
+
+                                    <a href="#" class="btn btn-primary">
+                                        <i class="ace-icon fa fa-tachometer"></i>
+                                        主页
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- PAGE CONTENT ENDS -->
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.page-content -->
+        </div>
+    </div><!-- /.main-content -->
+    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+        <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+    </a>
+</div>
+<!-- /.main-container -->
+#parse("footer-top.html")
+<!-- 页面特定的插件脚本 -->
+#parse("footer-bottom.html")
+<!-- 与此页面相关的内联脚本 -->
+<script type="text/javascript">
+</script>
+</body>
+</html>
+

@@ -1,0 +1,176 @@
+<!-- ace scripts -->
+<script type="text/javascript" src="$res/assets/js/src/elements.scroller.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/elements.colorpicker.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/elements.fileinput.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/elements.typeahead.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/elements.wysiwyg.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/elements.spinner.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/elements.treeview.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/elements.wizard.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/elements.aside.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.basics.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.scrolltop.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.ajax-content.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.touch-drag.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.sidebar.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.sidebar-scroll-1.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.submenu-hover.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.widget-box.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.settings.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.settings-rtl.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.settings-skin.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.widget-on-reload.js?v=$!version"></script>
+<script type="text/javascript" src="$res/assets/js/src/ace.searchbox-autocomplete.js?v=$!version"></script>
+<script type="text/javascript" src="$res/components/jquery-ui/jquery-ui.min.js?v=$!version"></script>
+<script type="text/javascript" src="$res/components/jquery-validation/dist/jquery.validate.js?v=$!version"></script>
+<script type="text/javascript" src="$res/components/security/sha256.js?v=$!version"></script>
+<script type="text/javascript" src="$res/plugins/jquery.form.init.js?v=$!version"></script>
+<script type="text/javascript" src="$res/plugins/showLoading/js/jquery.showLoading.js?v=$!version"></script>
+<script type="text/javascript" src="$res/app/common.js?v=$!version"></script>
+<script type="text/javascript" src="$res/app/http.js?v=$!version"></script>
+<script type="text/javascript" src="$res/app/app.js?v=$!version"></script>
+<div class="modify-password-dialog bootbox modal fade in" tabindex="-1" role="dialog" aria-hidden="false"
+     style="display: none;padding-top: 20px;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="bootbox-close-button close">×</button>
+                <h4 class="modal-title">密码修改</h4>
+            </div>
+            <div class="modal-body">
+                <div class="bootbox-body">
+                    <form class="modify-password-form form-horizontal" method="get" novalidate="novalidate">
+                        <div class="form-group user-password">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                   for="oldPassword">原始密码:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="password" name="oldPassword" id="oldPassword"
+                                           class="col-xs-12 col-sm-6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2 user-password"></div>
+                        <div class="form-group user-password">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                   for="modifyPassword">新密码:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="password" name="modifyPassword" id="modifyPassword"
+                                           class="col-xs-12 col-sm-6">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-2  user-password"></div>
+                        <div class="form-group user-password">
+                            <label class="control-label col-xs-12 col-sm-3 no-padding-right"
+                                   for="modifyPassword2">重复新密码:</label>
+                            <div class="col-xs-12 col-sm-9">
+                                <div class="clearfix">
+                                    <input type="password" name="modifyPassword2" id="modifyPassword2"
+                                           class="col-xs-12 col-sm-6">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary update-password-save-button">
+                    <i class="fa fa-save"></i>
+                    保存
+                </button>
+                <button type="button" class="btn bootbox-close-button">
+                    <i class="fa fa-remove red"></i>
+                    取消
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    jQuery(function ($) {
+        $('.modify-password-form').validate({
+            errorElement: 'div',
+            errorClass: 'help-block',
+            focusInvalid: false,
+            rules: {
+                oldPassword: {required: true, minlength: 8, strongPWD: true},
+                modifyPassword: {required: true, minlength: 8, strongPWD: true},
+                modifyPassword2: {required: true, minlength: 8, equalTo: "#modifyPassword"}
+            },
+            messages: {
+                oldPassword: {required: "原始密码不能为空.", minlength: "原始密码不能少于{0}位字符."},
+                modifyPassword: {required: "新密码不能为空.", minlength: "不能少于{0}位字符."},
+                modifyPassword2: {required: "重复新密码不能为空.", minlength: "不能少于{0}位字符.", equalTo: "重复新密码输入不正确."}
+            },
+
+            invalidHandler: function (event, validator) { //display error alert on form submit
+                $('.alert-danger', $('.modify-password-form')).show();
+            },
+            highlight: function (e) {
+                $(e).closest('.form-group').removeClass('has-info').addClass('has-error');
+            },
+            success: function (e) {
+                $(e).closest('.form-group').removeClass('has-error').addClass('has-info');
+                $(e).remove();
+            },
+            errorPlacement: function (error, element) {
+                if (element.is(':checkbox') || element.is(':radio')) {
+                    var controls = element.closest('div[class*="col-"]');
+                    if (controls.find(':checkbox,:radio').length > 1) controls.append(error);
+                    else error.insertAfter(element.nextAll('.lbl:eq(0)').eq(0));
+                }
+                else if (element.is('.select2')) {
+                    error.insertAfter(element.siblings('[class*="select2-container"]:eq(0)'));
+                }
+                else if (element.is('.chosen-select')) {
+                    error.insertAfter(element.siblings('[class*="chosen-container"]:eq(0)'));
+                }
+                else error.insertAfter(element);
+            },
+            submitHandler: function (form) {
+            },
+            invalidHandler: function (form) {
+            }
+        });
+
+        $('.btn-modify-password').on('click', function () {
+            $('.modify-password-dialog').modal('show');
+        });
+        $('.update-password-save-button').on('click', function () {
+            save();
+        });
+        $(".modify-password-form input").keypress(function (e) {
+            if (e.which == 13) {
+                save();
+                return false;
+            }
+        });
+    });
+    function save() {
+        if (!$('.modify-password-form').valid()) return false;
+        var oldPwd = sha256_digest($('#oldPassword').val());
+        http.getJSON("/core/user/checkPassword", {oldPassword: oldPwd}, function (r) {
+            if (!r.value) {
+                showErrorTips("原始密码不正确!");
+                $('#oldPassword').focus();
+                return;
+            } else {
+                var pwd = sha256_digest($('#modifyPassword').val());
+                http.getJSON("/core/user/modifyPassword", {password: pwd}, function (r) {
+                    console.info(r)
+                    if (r.errcode == '0') {
+                        showSuccessTips("密码修改保存成功.3秒后重新退出登录.");
+                        setTimeout(function () {
+                            location.href = "${ctx}/logout";
+                        }, 5000);
+                    } else {
+                        showErrorTips(r.info);
+                    }
+                });
+            }
+        });
+    }
+</script>

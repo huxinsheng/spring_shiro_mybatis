@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<tools>
+    <toolbox scope="application">
+        <tool key="date" class="org.apache.velocity.tools.generic.DateTool"/>
+        <tool key="dateWeek" class="com.hxs.ssm.utils.velocity.DateWeekTool"/>
+        <tool key="number" class="org.apache.velocity.tools.generic.NumberTool"/>
+        <tool key="json" class="com.hxs.ssm.utils.velocity.JsonTool"/>
+        <tool key="mobile" class="com.hxs.ssm.utils.velocity.MobileTool"/>
+        <tool key="shiro" class="com.hxs.ssm.utils.velocity.Permission"/>
+    </toolbox>
+</tools>

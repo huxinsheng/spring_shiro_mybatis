@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxs.ssm.dao.core.RoleDAO">
+    <!--auto generated Code-->
+    <resultMap id="default" type="com.hxs.ssm.model.core.Role">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="desc" property="desc"/>
+        <result column="sign" property="sign"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="creator" property="creator"/>
+        <result column="updateBy" property="updateBy"/>
+        <collection property="menus" column="{roleId=id,parent=parent}" select="com.hxs.ssm.dao.core.RoleMenuDAO.findByRoleId"/>
+    </resultMap>
+
+    <!--auto generated Code-->
+    <sql id="all_column">
+        `id`,
+        `name`,
+        `desc`,
+        `sign`,
+        `createTime`,
+        `updateTime`,
+        `creator`,
+        `updateBy`
+    </sql>
+    <sql id="where">
+        <if test="id!=null and id!=''">
+            and `id` = #{id}
+        </if>
+        <if test="name!=null and name!=''">
+            and `name` = #{name}
+        </if>
+        <if test="sign!=null and sign!=''">
+            and `sign` = #{sign}
+        </if>
+    </sql>
+    <sql id="order">
+        <if test="sidx!=null and sidx!=''">
+            order by ${sidx} ${sord}
+        </if>
+    </sql>
+    <!--auto generated Code-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO t_sys_role (
+            `id`,
+            `name`,
+            `desc`,
+            `sign`,
+            `createTime`,
+            `updateTime`,
+            `creator`,
+            `updateBy`
+        ) VALUES (
+            #{id},
+            #{name},
+            #{desc},
+            #{sign},
+            #{createTime},
+            #{updateTime},
+            #{creator},
+            #{updateBy}
+        )
+    </insert>
+
+    <!--auto generated Code-->
+    <update id="update">
+        UPDATE t_sys_role
+        <set>
+            <if test="id != null"> `id` = #{id}, </if>
+            <if test="name != null"> `name` = #{name}, </if>
+            <if test="desc != null"> `desc` = #{desc}, </if>
+            <if test="sign != null"> `sign` = #{sign}, </if>
+            <if test="createTime != null"> `createTime` = #{createTime}, </if>
+            <if test="updateTime != null"> `updateTime` = #{updateTime}, </if>
+            <if test="creator != null"> `creator` = #{creator}, </if>
+            <if test="updateBy != null"> `updateBy` = #{updateBy} </if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+    <delete id="deleteById">
+        delete from t_sys_role
+        where `id`=#{id}
+    </delete>
+    <select id="findExistsByName" resultMap="default">
+        select
+        <include refid="all_column"/>
+        from t_sys_role
+        where 1=1
+        and `name` = #{name}
+        and `sign` = #{sign}
+        <if test="id!=null and id!=''">
+           and `id` <![CDATA[<>]]> #{id}
+        </if>
+    </select>
+    <select id="findByEntity" resultMap="default">
+        select
+        <include refid="all_column"/>
+        ,#{parent} parent
+        from t_sys_role
+        where 1=1
+        <include refid="where"/>
+        <include refid="order"/>
+    </select>
+</mapper>
+

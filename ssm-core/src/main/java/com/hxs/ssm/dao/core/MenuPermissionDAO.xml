@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.hxs.ssm.dao.core.MenuPermissionDAO">
+    <resultMap id="permissionResultMap" type="com.hxs.ssm.model.Permission">
+        <result column="menuId" property="id"/>
+        <result column="name" property="name"/>
+        <result column="sign" property="sign"/>
+        <result column="checked" property="checked"/>
+    </resultMap>
+    <sql id="where">
+        <if test="id!=null">
+            and id=#{id}
+        </if>
+        <if test="permissionId!=null and permissionId!=''">
+            and permissionId=#{permissionId}
+        </if>
+        <if test="menuId!=null and menuId!=''">
+            and menuId=#{menuId}
+        </if>
+    </sql>
+    <select id="findPermissionByEntity" resultType="com.hxs.ssm.model.Permission">
+        SELECT a.id, a.name, a.sign,
+            CASE
+                WHEN b.menuId IS NULL THEN
+                    'false'
+                ELSE
+                    'true'
+                END checked
+        FROM
+            t_sys_permission a
+        LEFT JOIN t_sys_menu_permission b ON a.id = b.permissionId
+        AND b.menuId = #{menuId}
+    </select>
+    <insert id="insertAll" parameterType="java.util.List" useGeneratedKeys="true">
+        INSERT INTO t_sys_menu_permission(menuId, permissionId, creator, createTime)VALUES
+        <foreach collection="list" item="item" index="index" separator=",">
+            (#{item.menuId},#{item.permissionId},#{item.creator},#{item.createTime})
+        </foreach>
+    </insert>
+    <delete id="deleteByPrimaryKey">
+        delete from t_sys_menu_permission
+        where id = #{id}
+    </delete>
+    <delete id="deleteBySelective">
+        delete from t_sys_menu_permission
+        where 1=1
+        <include refid="where"/>
+    </delete>
+    <delete id="deleteByMenuId">
+        delete from t_sys_menu_permission
+        where 1=1
+        <if test="menuId!=null and menuId!=''">
+        and (menuId = #{menuId}
+                or menuId in (
+                    select menuId
+                    from
+                      t_sys_menu
+                    where
+                      parent = #{menuId}
+                )
+            )
+        </if>
+        <if test="permissionId!=null and permissionId!=''">
+            and permissionId = #{permissionId}
+        </if>
+    </delete>
+    <delete id="deleteByParentMenuId">
+        delete from t_sys_menu_permission
+        where
+        menuId in (
+          select menuId
+          from
+            t_sys_menu
+          where
+            parent = #{menuId}
+        )
+    </delete>
+</mapper>

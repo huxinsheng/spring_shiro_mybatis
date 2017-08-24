@@ -1,0 +1,61 @@
+.text{
+    display: inline-block;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-image: none !important;
+    border: 5px solid #FFF;
+    border-radius: 0;
+    box-shadow: none !important;
+    cursor: pointer;
+    vertical-align: middle;
+    margin: 0;
+    text-align: right;
+}
+.text.text-label{
+    border-width: 0 !important;
+    background: transparent none !important;
+    text-shadow: none !important;
+    padding: 4px 12px !important;
+    line-height: 20px !important;
+    width:100px;
+}
+.text.text-label-long{
+    border-width: 0 !important;
+    background: transparent none !important;
+    text-shadow: none !important;
+    padding: 4px 12px !important;
+    line-height: 20px !important;
+    width:160px;
+}
+.text.text-red{
+    color: #FF5858;
+}
+hr{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 0;
+    border-top: 1px solid #eeeeee;
+}
+input[type=checkbox].ace.ace-switch.ace-switch-4 + .lbl::before,
+input[type=checkbox].ace.ace-switch.ace-switch-5 + .lbl::before {
+    content: "是\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0\a0否";
+    font-size: 12px;
+    line-height: 21px;
+    height: 24px;
+    overflow: hidden;
+    border-radius: 12px;
+    background-color: #8B9AA3;
+    border: 1px solid #8B9AA3;
+    color: #FFF;
+    width: 56px;
+    text-indent: -25px;
+    text-shadow: 0 0 0 #FFF;
+    display: inline-block;
+    position: relative;
+    box-shadow: none;
+    -webkit-transition: all 0.25s ease;
+    -o-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+}
+.width-15 {
+    width: 15% !important;
+}
