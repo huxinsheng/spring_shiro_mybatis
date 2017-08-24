@@ -90,7 +90,7 @@ public class SecurityRealm extends AuthorizingRealm {
      * 登录验证
      */
     @Override
-    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
+    protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) {
         String loginId = String.valueOf(token.getPrincipal());
         String password = new String((char[]) token.getCredentials());
         // 通过数据库进行验证
@@ -100,7 +100,7 @@ public class SecurityRealm extends AuthorizingRealm {
         }
         if (authentication.isFirstLogin()) {
             throw new AuthenticationException("firstLogin");
-        }else if(authentication.isDisabled()){
+        } else if (authentication.isDisabled()) {
             throw new AuthenticationException("该用户已经禁用.");
         }
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(loginId, password, getName());

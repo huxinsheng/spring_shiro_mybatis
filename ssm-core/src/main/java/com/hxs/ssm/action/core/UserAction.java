@@ -89,11 +89,6 @@ public class UserAction extends ViewAction {
                 attr.addFlashAttribute("firstLogin", true);
                 session.setAttribute(lockSessionKey, null);
                 return "redirect:/login";
-            } else if (e.getMessage().indexOf("load") != -1) {
-                String s = e.getMessage().split("\\|")[1];
-                attr.addFlashAttribute("errorMsg", s);
-                session.setAttribute(lockSessionKey, null);
-                return "redirect:/login";
             }
             misTimes++;
             session.setAttribute(misSessionKey, misTimes);
